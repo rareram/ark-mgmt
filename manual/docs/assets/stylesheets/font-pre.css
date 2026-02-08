@@ -1,0 +1,8 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+:root {
+  --md-text-font: "Pretendard", system-ui, -apple-system,
+                  "Segoe UI", Roboto, "Apple SD Gothic Neo",
+                  "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+}
+

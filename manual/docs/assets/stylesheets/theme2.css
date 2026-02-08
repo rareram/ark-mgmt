@@ -1,0 +1,90 @@
+/* ==========================================================================
+   1. 상단바 색상 강제 고정 (파란색 방지)
+   * !important를 사용하여 테마 기본 설정보다 무조건 우선순위를 높입니다.
+   ========================================================================== */
+:root,
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color:        #3a3a3a !important; /* 상단바 차콜 */
+    --md-primary-fg-color--dark:  #2f2f2f !important;
+    --md-primary-fg-color--light: #4a4a4a !important;
+}
+
+/* ==========================================================================
+   2. 사이드바 계층 구조 (Level 2 vs Level 3 구분)
+   ========================================================================== */
+
+/* [Level 2] 제품명 (예: TableDiff, PG CDC)
+   - 구조: 사이드바 > 최상위메뉴 > 리스트 > '제품명'
+   - 효과: 크고, 굵고, 진하게, 위쪽 여백 줌 */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested > .md-nav__link {
+    font-size: 1.15rem !important;  /* 폰트 키움 */
+    font-weight: 800 !important;    /* 아주 굵게 */
+    color: #3a3a3a !important;      /* 진한 차콜색 */
+    margin-top: 1.5em !important;   /* 위쪽 제품과 간격 벌림 */
+    line-height: 1.4 !important;
+    opacity: 1 !important;
+}
+
+/* [Level 2 예외처리] 첫 번째 제품(TableDiff)은 상단 여백 제거 */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested:first-child > .md-nav__link {
+    margin-top: 0 !important;
+}
+
+/* [Level 3] 하위 메뉴 (예: 개발산출물, 사용, 환경구성)
+   - 구조: ... > 제품명 > 리스트 > '하위 메뉴'
+   - 효과: 제품명에서 상속받은 큰 폰트를 '강제로 작게' 다시 줄임 (이게 핵심) */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested > .md-nav__list > .md-nav__item--nested > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested > .md-nav__list > .md-nav__item > .md-nav__link {
+    font-size: 0.85rem !important;  /* 다시 작게 줄임 */
+    font-weight: 400 !important;    /* 굵기 뺌 (보통) */
+    color: #555555 !important;      /* 회색으로 연하게 */
+    margin-top: 0.2em !important;   /* 간격 좁힘 */
+    line-height: 1.2 !important;
+}
+
+/* 다크모드 대응 (글자색 반전) */
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested > .md-nav__link {
+    color: #ffffff !important;
+}
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__list > .md-nav__item--nested > .md-nav__list > .md-nav__item--nested > .md-nav__link {
+    color: #aaaaaa !important;
+}
+
+/* ==========================================================================
+   3. 본문 하이퍼링크 스타일
+   * 기본 링크 색상을 눈에 띄게 변경하고, hover 시 밑줄을 추가합니다.
+   ========================================================================== */
+.md-typeset a {
+  color: #00529B; /* 선명한 파란색 */
+  text-decoration: none; /* 기본 밑줄은 제거 */
+}
+
+.md-typeset a:hover {
+  text-decoration: underline; /* hover 시에만 밑줄 표시 */
+}
+
+/* 하위 리스트 들여쓰기 간격 강조 */
+/* 1레벨 리스트: 검은 원 (기본값) */
+.md-typeset ul li {
+    margin-left: 1.5em;
+    list-style-type: disc;
+}
+
+/* 2레벨 리스트: 빈 원 */
+.md-typeset ul li ul li {
+    margin-left: 1.5em;
+    list-style-type: circle;
+}
+
+/* 3레벨 리스트: 검은 네모 */
+.md-typeset ul li ul li ul li {
+    margin-left: 1.5em;
+    list-style-type: square;
+}
+
+
+/* 다크모드 대응 (링크 색상 밝게) */
+[data-md-color-scheme="slate"] .md-typeset a {
+    color: #82b1ff; /* Material Design의 밝은 파란색 */
+}

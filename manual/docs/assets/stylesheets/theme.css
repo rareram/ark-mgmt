@@ -1,0 +1,18 @@
+/* =========================
+   Charcoal (Light mode)
+   ========================= */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #3a3a3a;        /* 메인 차콜 */
+  --md-primary-fg-color--dark: #2f2f2f; /* hover / active */
+  --md-primary-fg-color--light: #4a4a4a;
+}
+
+/* =========================
+   Charcoal (Dark mode)
+   ========================= */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #2e2e2e;
+  --md-primary-fg-color--dark: #242424;
+  --md-primary-fg-color--light: #3a3a3a;
+}
+
