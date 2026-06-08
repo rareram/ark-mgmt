@@ -238,3 +238,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Temp
+**/.sessions/
+*.csv
+uv.lock

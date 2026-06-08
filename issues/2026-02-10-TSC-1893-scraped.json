@@ -1,0 +1,35 @@
+{
+  "issue_key": "TSC-1893",
+  "url": "https://lab.idatabank.com/jira/browse/TSC-1893",
+  "scraped_at": "2026-02-10T15:42:32.930273",
+  "summary": "[이슈] 추출 모듈 IN_MEMORY_TX_SIZE 초과로 인한 잦은 캐시 작성 및 모듈 지연 발생 (260204)",
+  "status": "열림",
+  "priority": "보통",
+  "resolution": "",
+  "type": "버그",
+  "description": "환경\n\nAIX 6.1 ,RAC 2node\nArkCDC agent version 2.2.3.RC2 (build 88)\n\n현상\n\n2월 3일 12시경 IN_MEMORY_TX_SIZE 를 초과하여 일부 데이터가 캐시파일로 작성되기 시작하였으며, 시간이 지남에 따라 빈도가 점점 늘어남\n해당 현상으로 모듈 지연되어 아카이브 보관주기를 따라가지 못해서 에러 발생\n문제 발생 당일 아카이브 발생량 평소 대비 크지 않음\n모듈 기동 시점으로부터 약 13일 이후 해당 현상 발생\n\n로그\n\n첨부된 파일 참고 : error_260204.tar.gz\n\n긴급조치\n\nARKDV를 통해 정합성 보정\n향후 모니터링 시 주기적으로 재기동 예정\n\n원인분석\n\n \n\n해결방안\n\n \n\n비고\n\n동일 현상이 금일 에큐온저축은행에서도 발생하였으며, 재기동 후 해소된 것으로 보아 메모리 관련 이슈로 의심됨\nOS : AIX 7\n모듈 기동 시점으로부터 약 50일 이후 발생 (2025년 12월 13일~)\n2월 4일 오전 9시경 확인 후 재기동하여 조치\n로그 파일 첨부 : EXT_DWD_20260204.2.7z",
+  "environment": "",
+  "project": "Tech Support Center",
+  "details": {
+    "유형": "버그",
+    "상태": "열림",
+    "우선순위": "보통",
+    "레이블": "AFC_ORA aix",
+    "큰틀 연결": "이동의즐거움 (2025년)",
+    "사업단계": "유상MA",
+    "제품": "AFC_ORA",
+    "이슈발생원인": "SE 조사중",
+    "긴급조치": "미입력",
+    "원인분석및해결방안": "미입력",
+    "조치방안": "미입력"
+  },
+  "people": {},
+  "dates": {},
+  "labels": [
+    "AFC_ORA",
+    "aix"
+  ],
+  "comments": [],
+  "links": [],
+  "attachments": []
+}

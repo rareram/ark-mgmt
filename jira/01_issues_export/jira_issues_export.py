@@ -9,13 +9,14 @@ JIRA_BASE_URL = os.getenv("JIRA_BASE_URL")
 JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
 
 # ======== 조회 조건 설정 ========
-PROJECT_KEY = "TSC"
+# PROJECT_KEY = "TSC"
+PROJECT_KEY = "AFF"
 ISSUE_TYPES = ["버그", "개선"]
 # STATUSES = ["Open", "In Progress", "Done"]
 STATUSES = []
 
-CREATED_FROM = "2025-01-01"
-CREATED_TO = "2025-12-31"
+CREATED_FROM = "2024-01-01"
+CREATED_TO = "2026-03-31"
 
 OUTPUT_CSV = "jira_issues_export.csv"
 # =================================

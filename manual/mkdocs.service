@@ -1,0 +1,13 @@
+[Unit]
+Description=MkDocs Documentation Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/paul/sandbox/ark-mgmt/manual
+ExecStart=/usr/bin/uv run mkdocs serve --dev-addr=0.0.0.0:8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

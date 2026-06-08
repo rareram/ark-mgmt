@@ -647,6 +647,7 @@ dependencies = [
     { name = "mkdocs-pdf" },
     { name = "mkdocs-pdf-export-plugin" },
     { name = "pymdown-extensions" },
+    { name = "requests" },
 ]
 
 [package.metadata]
@@ -661,6 +662,7 @@ requires-dist = [
     { name = "mkdocs-pdf", specifier = ">=0.1.2" },
     { name = "mkdocs-pdf-export-plugin", specifier = ">=0.5.10" },
     { name = "pymdown-extensions" },
+    { name = "requests", specifier = ">=2.32.5" },
 ]
 
 [[package]]

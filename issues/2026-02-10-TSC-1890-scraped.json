@@ -1,0 +1,32 @@
+{
+  "issue_key": "TSC-1890",
+  "url": "https://lab.idatabank.com/jira/browse/TSC-1890",
+  "scraped_at": "2026-02-10T15:43:20.514681",
+  "summary": "[이슈] Extract 모듈 추출 미진행 및 좀비 프로세스 과다 생성",
+  "status": "열림",
+  "priority": "보통",
+  "resolution": "",
+  "type": "버그",
+  "description": "1. 개요 : Extract 모듈 추출 미진행 및 좀비 프로세스 과다 생성\n\n2. 발생일시 : 2025년 12월 12일 이후\n\n3. 보고일시 : 2026년 1월 30일\n\n4. 진행단계 : SE 조사중\n\n5. 설치 구성정보\n\nAgent : ArkCDC agent version 2.2.2.RC2 (build 80) 20250528\nOS/DB : Solaris 11 / Oracle 11g RAC\n\n6. 현상\n\nExtract WISE_LHLSE, WISE_LHPJM 모듈이 2025년 12월 12일부터 추출동작을 하지 않음\n금일 문제된 모듈 중 WISE_LHLSE 모듈에 대한 좀비(defunct) 프로세스가 약 5000개 가량 확인되었음\n원격 접속 및 로그 반출이 불가능하여 현재 자세한 원인 확인 불가\n\n7. 원인 분석\n\n \n\n8. 긴급 조치 방안\n\n모듈 프로세스 kill 수행 후 재기동하지 않고 config 파일 비활성화 (PJM 모듈 포함)\n아카이브 복구가 불가능하여 추후 동기화 재구축 필요할 것으로 예상\n\n9. 해결 방안",
+  "environment": "",
+  "project": "Tech Support Center",
+  "details": {
+    "유형": "버그",
+    "상태": "열림",
+    "우선순위": "보통",
+    "레이블": "없음",
+    "큰틀 연결": "LH공사",
+    "사업단계": "유상MA",
+    "제품": "AFC_ORA",
+    "이슈발생원인": "SE 조사중",
+    "긴급조치": "미입력",
+    "원인분석및해결방안": "미입력",
+    "조치방안": "미입력"
+  },
+  "people": {},
+  "dates": {},
+  "labels": [],
+  "comments": [],
+  "links": [],
+  "attachments": []
+}

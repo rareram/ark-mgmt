@@ -105,6 +105,11 @@ nav:
           - 데이터베이스 및 테이블 생성: install-guide/postgresql/database-setup.md
   - 제품 매뉴얼:
       - 소개: products/index.md
+      - AFC:
+          - 개발환경:
+              - products/afc/index.md
+              - CLion 초기 설정: products/afc/clion-initial-setup.md
+              - AI Assistant 설정: products/afc/ai-assistant-setup.md
       - TableDiff:
           - 개요: products/tablediff/index.md
           - 개발산출물:

@@ -97,36 +97,90 @@ async def scrape_issue(issue_key, headless=True):
         try:
             # 기본 정보가 로드될 때까지 대기
             await page.wait_for_selector("#summary-val", timeout=10000)
-            
-            summary = await page.inner_text("#summary-val")
-            status = await page.inner_text("#status-val") if await page.query_selector("#status-val") else ""
-            priority = await page.inner_text("#priority-val") if await page.query_selector("#priority-val") else ""
-            
-            description_elem = await page.query_selector("#description-val")
-            description = await description_elem.inner_text() if description_elem else ""
-            
-            comments = []
-            comment_elements = await page.query_selector_all(".activity-comment")
-            for elem in comment_elements:
-                author_elem = await elem.query_selector(".author")
-                time_elem = await elem.query_selector("time")
-                body_elem = await elem.query_selector(".action-body")
-                
-                comments.append({
-                    "author": await author_elem.inner_text() if author_elem else "Unknown",
-                    "time": await time_elem.get_attribute("datetime") if time_elem else "",
-                    "body": await body_elem.inner_text() if body_elem else ""
-                })
 
+            # 브라우저 내에서 자바스크립트로 데이터 추출 (훨씬 빠르고 더 많은 정보를 가져옴)
+            extracted_data = await page.evaluate("""() => {
+                const getText = (sel) => document.querySelector(sel)?.innerText?.trim() || "";
+                
+                // 1. 기본 필드 수집
+                const data = {
+                    summary: getText('#summary-val'),
+                    status: getText('#status-val'),
+                    priority: getText('#priority-val'),
+                    resolution: getText('#resolution-val'),
+                    type: getText('#type-val'),
+                    description: getText('#description-val'),
+                    environment: getText('#environment-val'),
+                    project: getText('#project-name-val'),
+                };
+
+                // 2. 모듈별 키-값 쌍 자동 수집 (커스텀 필드 등 포함)
+                // Details, People, Dates 모듈 등을 순회
+                const scrapModule = (moduleId) => {
+                    const dict = {};
+                    const container = document.querySelector(moduleId);
+                    if (!container) return dict;
+                    
+                    // .item 요소들 찾기 (표준 Jira Server 구조)
+                    container.querySelectorAll('.item').forEach(item => {
+                        const nameElem = item.querySelector('.name');
+                        const valElem = item.querySelector('.value');
+                        if (nameElem && valElem) {
+                            const key = nameElem.innerText.replace(':', '').trim();
+                            const val = valElem.innerText.trim();
+                            dict[key] = val;
+                        }
+                    });
+                    return dict;
+                };
+
+                data.details = scrapModule('#details-module');
+                data.people = scrapModule('#people-module');
+                data.dates = scrapModule('#datesmodule');
+
+                // 3. 리스트형 데이터 (Labels, Components, Versions)
+                data.labels = Array.from(document.querySelectorAll('#wrap-labels .labels .lozenge, .labels-wrap .lozenge'))
+                    .map(el => el.innerText.trim());
+                
+                // 4. 댓글 (Comments)
+                data.comments = Array.from(document.querySelectorAll('.activity-comment')).map(comment => {
+                    const author = comment.querySelector('.author')?.innerText?.trim() || "Unknown";
+                    const time = comment.querySelector('time')?.getAttribute('datetime') || 
+                                 comment.querySelector('time')?.innerText?.trim() || "";
+                    const body = comment.querySelector('.action-body')?.innerText?.trim() || "";
+                    return { author, time, body };
+                });
+
+                // 5. 연결된 이슈 (Linked Issues)
+                const links = [];
+                document.querySelectorAll('.issuelinks-link, .link-content a.issue-link').forEach(link => {
+                    links.push({
+                        text: link.innerText.trim(),
+                        href: link.getAttribute('href'),
+                        title: link.getAttribute('title')
+                    });
+                });
+                data.links = links;
+
+                // 6. 첨부파일 (Attachments)
+                const attachments = [];
+                document.querySelectorAll('#attachmentextensions .attachment-content, .attachments-table tr').forEach(row => {
+                     const nameEl = row.querySelector('.attachment-title, .filename');
+                     if(nameEl) {
+                         attachments.push(nameEl.innerText.trim());
+                     }
+                });
+                data.attachments = attachments;
+
+                return data;
+            }""")
+
+            # 파이썬 레벨 메타데이터 합치기
             issue_data = {
                 "issue_key": issue_key,
                 "url": issue_url,
-                "summary": summary.strip(),
-                "status": status.strip(),
-                "priority": priority.strip(),
-                "description": description.strip(),
-                "comments": comments,
-                "scraped_at": datetime.now().isoformat()
+                "scraped_at": datetime.now().isoformat(),
+                **extracted_data
             }
 
             # 3. 저장
